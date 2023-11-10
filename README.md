@@ -1,0 +1,1 @@
+> A powerful equation calculator provides the function of solving equations, solving indefinite integrals, finding derivatives, and finding values of functions

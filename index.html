@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>方程计算器</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+      }
+      h2 {
+        margin-top: 0;
+      }
+      ul {
+        padding-right: 15px;
+        list-style-type: none;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+      a.button {
+        display: block;
+        padding: 10px 20px;
+        background-color: orange;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+      #frame {
+        width: 50%;
+        flex-grow: 1;
+        border: none;
+      }
+      button {
+        width: 5px;
+        writing-mode: vertical-rl; /* 从上到下垂直排列 */
+        font-size: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="equationList">
+      <h2>方程计算器</h2>
+      <li>
+        <a href="#" class="button" onclick="loadPage('Evaluation.html')"
+          >函数值</a
+        >
+      </li>
+      <li>
+        <a href="#" class="button" onclick="loadPage('Solution.html')"
+          >解方程</a
+        >
+      </li>
+      <li>
+        <a href="#" class="button" onclick="loadPage('Derivation.html')"
+          >求导</a
+        >
+      </li>
+      <li>
+        <a href="#" class="button" onclick="loadPage('Integral.html')"
+          >不定积分</a
+        >
+      </li>
+    </ul>
+    <button id="toggleButton" onclick="toggleList()">隐藏边栏</button>
+    <iframe id="frame" src="" frameborder="0"></iframe>
+    <script>
+      function loadPage(url) {
+        var frame = document.getElementById("frame");
+        frame.src = url;
+        localStorage.setItem("currentPage", url);
+      }
+
+      window.addEventListener("DOMContentLoaded", function () {
+        var currentPage = localStorage.getItem("currentPage");
+        if (currentPage) {
+          loadPage(currentPage);
+        } else {
+          loadPage("Evaluation.html"); // 默认加载页面
+        }
+
+        var isSidebarHidden = localStorage.getItem("isSidebarHidden");
+        var list = document.getElementById("equationList");
+        var toggleButton = document.getElementById("toggleButton");
+        if (isSidebarHidden === "true") {
+          list.style.display = "none";
+          toggleButton.innerText = "显示边栏";
+        } else {
+          list.style.display = "block";
+          toggleButton.innerText = "隐藏边栏";
+        }
+      });
+
+      function toggleList() {
+        var list = document.getElementById("equationList");
+        var toggleButton = document.getElementById("toggleButton");
+        if (list.style.display === "none") {
+          list.style.display = "block";
+          toggleButton.innerText = "隐藏边栏";
+          localStorage.setItem("isSidebarHidden", "false");
+        } else {
+          list.style.display = "none";
+          toggleButton.innerText = "显示边栏";
+          localStorage.setItem("isSidebarHidden", "true");
+        }
+      }
+    </script>
+  </body>
+</html>

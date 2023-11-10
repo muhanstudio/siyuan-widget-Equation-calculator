@@ -1,0 +1,30 @@
+{
+  "name": "Equation-calculator",
+  "author": "muhanstudio",
+  "url": "https://github.com/muhanstudio/siyuan-widget-Equation-calculator",
+  "version": "0.0.2",
+  "minAppVersion": "1.1.1",
+  "displayName": {
+    "default": "Equation-calculator",
+    "zh_CN": "方程计算器"
+  },
+  "description": {
+    "default": "A powerful equation calculator provides the function of solving equations, solving indefinite integrals, finding derivatives, and finding values of functions",
+    "zh_CN": "一个强大方程计算器，提供解方程，求不定积分，求导数，求函数值的功能"
+  },
+  "readme": {
+    "default": "README.md",
+    "zh_CN": "README_zh_CN.md"
+  },
+  "funding": {
+    "openCollective": "",
+    "patreon": "",
+    "github": "",
+    "custom": [
+      ""
+    ]
+  },
+  "keywords": [
+    "计算器", "Equation calculator" , "解方程" ,"Solving equations" ,"不定积分", "indefinite integral", "导数", "derivative", "函数", "function", "函数值", "function value", "计算器", "calculator"
+  ]
+}

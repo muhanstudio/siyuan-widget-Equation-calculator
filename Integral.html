@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+      }
+
+      .calculator-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .calculator-column {
+        display: flex;
+        flex-basis: 100%;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .calculator-button {
+        display: inline-block;
+        padding: 10px;
+        margin: 5px;
+        width: 65px;
+        height: 65px;
+        background-color: #e0e0e0;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        text-align: center;
+        line-height: 60px;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+      }
+
+      .calculator-button:hover {
+        background-color: #ccc;
+      }
+
+      .calculator-button:active {
+        background-color: #aaa;
+      }
+
+      .calculator-input {
+        padding: 10px;
+        margin-bottom: 10px;
+        width: 100%;
+        font-size: 16px;
+      }
+
+      .calculator-submit {
+        padding: 10px 20px;
+        margin: 5px;
+        background-color: #4caf50;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .calculator-submit:hover {
+        background-color: #45a049;
+      }
+
+      .calculator-submit:active {
+        background-color: #3e8e41;
+      }
+
+      .solution {
+        margin-top: 20px;
+        font-size: 16px;
+        text-align: center;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="equationForm">
+      <div class="calculator-container">
+        <input
+          type="text"
+          name="equation"
+          id="equation"
+          class="calculator-input"
+          placeholder="输入函数"
+        />
+        <input
+          type="button"
+          value="积分"
+          class="calculator-submit"
+          onclick="solveIntegral()"
+        />
+        <div class="calculator-submit" onclick="copyEquationAndSolution()">
+          复制方程与结果
+        </div>
+        <div class="calculator-submit" onclick="clearEquation()">清除</div>
+        <div class="calculator-submit" onclick="backspace()">&larr;</div>
+        <p id="solution" class="solution"></p>
+        <div class="calculator-button" onclick="insertSymbol('x')">x</div>
+        <div class="calculator-button" onclick="insertSymbol('^')">^</div>
+        <div class="calculator-button" onclick="insertSymbol('(')">(</div>
+        <div class="calculator-button" onclick="insertSymbol(')')">)</div>
+        <div class="calculator-button" onclick="insertSymbol('=')">=</div>
+        <div class="calculator-column">
+          <div class="calculator-button" onclick="insertSymbol('sin()')">
+            sin
+          </div>
+          <div class="calculator-button" onclick="insertSymbol('cos()')">
+            cos
+          </div>
+          <div class="calculator-button" onclick="insertSymbol('tan()')">
+            tan
+          </div>
+          <div class="calculator-button" onclick="insertSymbol('ln()')">ln</div>
+          <div class="calculator-button" onclick="insertSymbol('e')">e</div>
+        </div>
+        <div class="calculator-column">
+          <div class="calculator-button" onclick="insertSymbol('1')">1</div>
+          <div class="calculator-button" onclick="insertSymbol('2')">2</div>
+          <div class="calculator-button" onclick="insertSymbol('3')">3</div>
+          <div class="calculator-button" onclick="insertSymbol('4')">4</div>
+          <div class="calculator-button" onclick="insertSymbol('5')">5</div>
+        </div>
+        <div class="calculator-column">
+          <div class="calculator-button" onclick="insertSymbol('6')">6</div>
+          <div class="calculator-button" onclick="insertSymbol('7')">7</div>
+          <div class="calculator-button" onclick="insertSymbol('8')">8</div>
+          <div class="calculator-button" onclick="insertSymbol('9')">9</div>
+          <div class="calculator-button" onclick="insertSymbol('0')">0</div>
+        </div>
+        <div class="calculator-column">
+          <div class="calculator-button" onclick="insertSymbol('+')">+</div>
+          <div class="calculator-button" onclick="insertSymbol('-')">-</div>
+          <div class="calculator-button" onclick="insertSymbol('*')">*</div>
+          <div class="calculator-button" onclick="insertSymbol('/')">/</div>
+          <div class="calculator-button" onclick="insertSymbol('.')">.</div>
+        </div>
+      </div>
+    </form>
+
+    <script src="js/nerdamer.core.js"></script>
+    <script src="js/Algebra.js"></script>
+    <script src="js/Calculus.js"></script>
+    <script src="js/Solve.js"></script>
+
+    <script>
+      function insertSymbol(symbol) {
+        var equationInput = document.getElementById("equation");
+        equationInput.value += symbol;
+      }
+
+      function clearEquation() {
+        var equationInput = document.getElementById("equation");
+        equationInput.value = "";
+      }
+
+      function backspace() {
+        var equationInput = document.getElementById("equation");
+        equationInput.value = equationInput.value.slice(0, -1);
+      }
+
+      function solveIntegral() {
+        var equation = document.getElementById("equation").value;
+
+        var solution = nerdamer.integrate(equation, "x").toString();
+
+        var solutionText = "对函数  " + equation + "  求不定积分得:<br>";
+        solutionText += solution;
+
+        document.getElementById("solution").innerHTML = solutionText;
+      }
+
+      function copyEquationAndSolution() {
+        var equation = document.getElementById("equation").value;
+        var solutions = document.getElementById("solution").innerHTML;
+        var copyText = solutions.replace(/<br>/g, "\n");
+
+        // 在复制的文本两侧加上 ` 包裹
+        copyText = "`" + copyText + "`";
+
+        var tempTextarea = document.createElement("textarea");
+        tempTextarea.value = copyText;
+        document.body.appendChild(tempTextarea);
+        tempTextarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempTextarea);
+      }
+    </script>
+  </body>
+</html>
