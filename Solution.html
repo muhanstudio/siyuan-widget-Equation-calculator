@@ -180,7 +180,16 @@
 
         var solutionText = "对方程  " + equation + "  求解得:<br>";
         solutions.forEach(function (solution, index) {
-          solutionText += "x" + (index + 1) + "=" + solution.text() + "<br>";
+          var solutionValue = solution.text();
+          solutionText += "x" + (index + 1) + "=" + solutionValue + "<br>";
+
+          // 检查解是否为分数
+          if (solutionValue.includes("/")) {
+            // 如果是分数，则再计算一次浮点数结果
+            var floatValue = nerdamer(solutionValue).evaluate().text();
+            solutionText +=
+              "(浮点数结果: x" + (index + 1) + "=" + floatValue + ")<br>";
+          }
         });
 
         document.getElementById("solution").innerHTML = solutionText;
